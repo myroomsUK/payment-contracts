@@ -1,0 +1,17 @@
+{
+  "name": "vendor_name/payment-contracts",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "require": {
+    "php": ">=7.2",
+    "beberlei/assert": "^3.2",
+    "ext-json": "*"
+  },
+  "authors": [
+    {
+      "name": "jacopo",
+      "email": "jacopo@myrooms.co.uk"
+    }
+  ]
+}
