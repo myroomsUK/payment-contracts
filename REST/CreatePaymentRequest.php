@@ -72,8 +72,8 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
             ->that($client)->notNull()->string()
             ->that($amount)->notNull()->integer()
             ->that($total)->integer()
-            ->that($checkIn)->date( self::dateFormat)
-            ->that($checkOut)->date(self::dateFormat)->greaterThan($checkIn)
+            ->that($checkIn->format(self::dateFormat))->date( self::dateFormat)
+            ->that($checkOut->format(self::dateFormat))->date(self::dateFormat)->greaterThan($checkIn)
             ->that($roomImageUrl)->url()
             ->that($roomName)->notNull()->verifyNow();
 
@@ -89,7 +89,7 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
         $this->weeklyPrice = $weeklyPrice;
         $this->monthlyPrice = $monthlyPrice;
     }
-    
+
     public function getReferenceId(): string
     {
         return $this->referenceId;
@@ -149,21 +149,25 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
     public static function fromArray(array $data): self
     {
         return new self(
-          $data['amount'],
-          $data['checkin'],
-          $data['checkout'],
-          $data['total'],
-          $data['roomName'],
-          $data['roomDescription'],
-          $data['roomImageUrl'],
-          $data['weeklyPrice'],
-          $data['monthlyPrice']
+            $data['referenceId'],
+            $data['client'],
+            $data['amount'],
+            $data['checkin'],
+            $data['checkout'],
+            $data['total'],
+            $data['roomName'],
+            $data['roomDescription'],
+            $data['roomImageUrl'],
+            $data['weeklyPrice'],
+            $data['monthlyPrice']
         );
     }
 
     public function toArray(): array
     {
         return [
+            'referenceId' => $this->referenceId,
+            'client' => $this->client,
             'amount' => $this->amount,
             'checkin' => $this->checkIn->format(self::dateFormat),
             'checkout' => $this->checkOut->format(self::dateFormat),
