@@ -73,7 +73,7 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
             ->that($amount)->notNull()->integer()
             ->that($total)->integer()
             ->that($checkIn->format(self::dateFormat))->date( self::dateFormat)
-            ->that($checkOut->format(self::dateFormat))->date(self::dateFormat)->greaterThan($checkIn)
+            ->that($checkOut->format(self::dateFormat))->date(self::dateFormat)->greaterThan($checkIn->format(self::dateFormat))
             ->that($roomImageUrl)->url()
             ->that($roomName)->notNull()->verifyNow();
 
