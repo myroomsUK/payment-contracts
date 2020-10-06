@@ -10,6 +10,16 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
     private const dateFormat = 'Y-m-d';
 
     /**
+     * @var string
+     */
+    private $referenceId;
+
+    /**
+     * @var string
+     */
+    private $client;
+
+    /**
      * @var int
      */
     private $amount;
@@ -54,16 +64,21 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
      */
     private $monthlyPrice;
 
-    public function __construct(int $amount, \DateTimeImmutable $checkIn, \DateTimeImmutable $checkOut, int $total, string $roomName, string $roomDescription, string $roomImageUrl, int $weeklyPrice, int $monthlyPrice)
+    public function __construct(string $referenceId, string $client, $amount, \DateTimeImmutable $checkIn, \DateTimeImmutable $checkOut, int $total, string $roomName, string $roomDescription, string $roomImageUrl, int $weeklyPrice, int $monthlyPrice)
     {
 
-        \Assert\Assert::lazy()->that($amount)->notNull()->integer()
+        \Assert\Assert::lazy()
+            ->that($referenceId)->notNull()->string()
+            ->that($client)->notNull()->string()
+            ->that($amount)->notNull()->integer()
             ->that($total)->integer()
             ->that($checkIn)->date( self::dateFormat)
             ->that($checkOut)->date(self::dateFormat)->greaterThan($checkIn)
             ->that($roomImageUrl)->url()
             ->that($roomName)->notNull()->verifyNow();
 
+        $this->referenceId = $referenceId;
+        $this->client = $client;
         $this->amount = $amount;
         $this->checkIn = $checkIn;
         $this->checkOut = $checkOut;
@@ -74,7 +89,16 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
         $this->weeklyPrice = $weeklyPrice;
         $this->monthlyPrice = $monthlyPrice;
     }
+    
+    public function getReferenceId(): string
+    {
+        return $this->referenceId;
+    }
 
+    public function getClient(): string
+    {
+        return $this->client;
+    }
 
     public function getAmount(): int
     {
@@ -131,7 +155,7 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
           $data['total'],
           $data['roomName'],
           $data['roomDescription'],
-          $data['roomImageURl'],
+          $data['roomImageUrl'],
           $data['weeklyPrice'],
           $data['monthlyPrice']
         );
