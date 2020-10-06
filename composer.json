@@ -1,5 +1,5 @@
 {
-  "name": "vendor_name/payment-contracts",
+  "name": "myrooms/payment-contracts",
   "description": "description",
   "minimum-stability": "stable",
   "license": "MIT",
@@ -13,5 +13,10 @@
       "name": "jacopo",
       "email": "jacopo@myrooms.co.uk"
     }
-  ]
+  ],
+  "autoload": {
+    "psr-4": {
+      "Myrooms\\Payment\\Contracts\\": ""
+    }
+  }
 }
