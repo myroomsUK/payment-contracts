@@ -163,36 +163,36 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
     public static function fromArray(array $data): self
     {
         return new self(
-            $data[RequestField::REFENRECE],
-            $data[RequestField::CLIENT],
-            $data[RequestField::AMOUNT],
-            $data[RequestField::CHECKIN],
-            $data[RequestField::CHECKOUT],
-            $data[RequestField::TOTAL],
-            $data[RequestField::ROOM_NAME],
-            $data[RequestField::ROOM_DESC],
-            $data[RequestField::ROOM_IMAGE],
-            $data[RequestField::WEEKLY_PRICE],
-            $data[RequestField::MONTHLY_PRICE],
-            $data[RequestField::CURRENCY]
+            $data[PaymentRequestField::REFENRECE],
+            $data[PaymentRequestField::CLIENT],
+            $data[PaymentRequestField::AMOUNT],
+            $data[PaymentRequestField::CHECKIN],
+            $data[PaymentRequestField::CHECKOUT],
+            $data[PaymentRequestField::TOTAL],
+            $data[PaymentRequestField::ROOM_NAME],
+            $data[PaymentRequestField::ROOM_DESC],
+            $data[PaymentRequestField::ROOM_IMAGE],
+            $data[PaymentRequestField::WEEKLY_PRICE],
+            $data[PaymentRequestField::MONTHLY_PRICE],
+            $data[PaymentRequestField::CURRENCY]
         );
     }
 
     public function toArray(): array
     {
         return [
-            RequestField::REFENRECE => $this->referenceId,
-            RequestField::CLIENT => $this->client,
-            RequestField::AMOUNT => $this->amount,
-            RequestField::CHECKIN => $this->checkIn->format(self::dateFormat),
-            RequestField::CHECKOUT => $this->checkOut->format(self::dateFormat),
-            RequestField::TOTAL => $this->total,
-            RequestField::ROOM_NAME => $this->roomName,
-            RequestField::ROOM_DESC => $this->roomDescription,
-            RequestField::ROOM_IMAGE => $this->roomImageUrl,
-            RequestField::WEEKLY_PRICE => $this->weeklyPrice,
-            RequestField::MONTHLY_PRICE => $this->monthlyPrice,
-            RequestField::CURRENCY => $this->currency
+            PaymentRequestField::REFENRECE => $this->referenceId,
+            PaymentRequestField::CLIENT => $this->client,
+            PaymentRequestField::AMOUNT => $this->amount,
+            PaymentRequestField::CHECKIN => $this->checkIn->format(self::dateFormat),
+            PaymentRequestField::CHECKOUT => $this->checkOut->format(self::dateFormat),
+            PaymentRequestField::TOTAL => $this->total,
+            PaymentRequestField::ROOM_NAME => $this->roomName,
+            PaymentRequestField::ROOM_DESC => $this->roomDescription,
+            PaymentRequestField::ROOM_IMAGE => $this->roomImageUrl,
+            PaymentRequestField::WEEKLY_PRICE => $this->weeklyPrice,
+            PaymentRequestField::MONTHLY_PRICE => $this->monthlyPrice,
+            PaymentRequestField::CURRENCY => $this->currency
         ];
     }
 

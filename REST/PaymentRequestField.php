@@ -4,7 +4,7 @@
 namespace Myrooms\Payment\Contracts\REST;
 
 
-class RequestField
+class PaymentRequestField
 {
     public const REFENRECE = 'referenceId';
     public const CLIENT = 'client';
