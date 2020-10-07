@@ -18,6 +18,8 @@ interface CreatePaymentRequestContract
 
     public function getTotal(): int;
 
+    public function getCurrency(): string;
+
     public function getRoomName(): string;
 
     public function getRoomDescription(): string;

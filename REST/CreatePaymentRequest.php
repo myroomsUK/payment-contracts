@@ -64,7 +64,13 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
      */
     private $monthlyPrice;
 
-    public function __construct(string $referenceId, string $client, $amount, \DateTimeImmutable $checkIn, \DateTimeImmutable $checkOut, int $total, string $roomName, string $roomDescription, string $roomImageUrl, int $weeklyPrice, int $monthlyPrice)
+    /**
+     * @var string
+     */
+    private $currency;
+
+
+    public function __construct(string $referenceId, string $client, $amount, \DateTimeImmutable $checkIn, \DateTimeImmutable $checkOut, int $total, string $roomName, string $roomDescription, string $roomImageUrl, int $weeklyPrice, int $monthlyPrice, string $currency)
     {
 
         \Assert\Assert::lazy()
@@ -75,7 +81,9 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
             ->that($checkIn->format(self::dateFormat))->date( self::dateFormat)
             ->that($checkOut->format(self::dateFormat))->date(self::dateFormat)->greaterThan($checkIn->format(self::dateFormat))
             ->that($roomImageUrl)->url()
-            ->that($roomName)->notNull()->verifyNow();
+            ->that($roomName)->notNull()
+            ->that($currency)->notNull()
+            ->verifyNow();
 
         $this->referenceId = $referenceId;
         $this->client = $client;
@@ -88,6 +96,7 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
         $this->roomImageUrl = $roomImageUrl;
         $this->weeklyPrice = $weeklyPrice;
         $this->monthlyPrice = $monthlyPrice;
+        $this->currency = $currency;
     }
 
     public function getReferenceId(): string
@@ -146,37 +155,44 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
         return $this->monthlyPrice;
     }
 
+    public function getCurrency(): string
+    {
+        return $this->currency;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(
-            $data['referenceId'],
-            $data['client'],
-            $data['amount'],
-            $data['checkin'],
-            $data['checkout'],
-            $data['total'],
-            $data['roomName'],
-            $data['roomDescription'],
-            $data['roomImageUrl'],
-            $data['weeklyPrice'],
-            $data['monthlyPrice']
+            $data[RequestField::REFENRECE],
+            $data[RequestField::CLIENT],
+            $data[RequestField::AMOUNT],
+            $data[RequestField::CHECKIN],
+            $data[RequestField::CHECKOUT],
+            $data[RequestField::TOTAL],
+            $data[RequestField::ROOM_NAME],
+            $data[RequestField::ROOM_DESC],
+            $data[RequestField::ROOM_IMAGE],
+            $data[RequestField::WEEKLY_PRICE],
+            $data[RequestField::MONTHLY_PRICE],
+            $data[RequestField::CURRENCY]
         );
     }
 
     public function toArray(): array
     {
         return [
-            'referenceId' => $this->referenceId,
-            'client' => $this->client,
-            'amount' => $this->amount,
-            'checkin' => $this->checkIn->format(self::dateFormat),
-            'checkout' => $this->checkOut->format(self::dateFormat),
-            'total' => $this->total,
-            'roomName' => $this->roomName,
-            'roomDescription' => $this->roomDescription,
-            'roomImageUrl' => $this->roomImageUrl,
-            'weeklyPrice' => $this->weeklyPrice,
-            'monthlyPrice' => $this->monthlyPrice
+            RequestField::REFENRECE => $this->referenceId,
+            RequestField::CLIENT => $this->client,
+            RequestField::AMOUNT => $this->amount,
+            RequestField::CHECKIN => $this->checkIn->format(self::dateFormat),
+            RequestField::CHECKOUT => $this->checkOut->format(self::dateFormat),
+            RequestField::TOTAL => $this->total,
+            RequestField::ROOM_NAME => $this->roomName,
+            RequestField::ROOM_DESC => $this->roomDescription,
+            RequestField::ROOM_IMAGE => $this->roomImageUrl,
+            RequestField::WEEKLY_PRICE => $this->weeklyPrice,
+            RequestField::MONTHLY_PRICE => $this->monthlyPrice,
+            RequestField::CURRENCY => $this->currency
         ];
     }
 
