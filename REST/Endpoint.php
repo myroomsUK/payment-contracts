@@ -9,22 +9,27 @@ class Endpoint
     /**
      * @var string
      */
-    private $uri;
+    private $relativePath;
 
     /**
      * @var string
      */
     private $method;
 
-    public function __construct(string $uri, string $method)
+    public function __construct(string $relativePath, string $method)
     {
-        $this->uri = $uri;
+        $this->relativePath = $relativePath;
         $this->method = $method;
     }
 
-    public function getUri(): string
+    public function getRelativePath(): string
     {
-        return $this->uri;
+        return $this->relativePath;
+    }
+
+    public function getUrl(string $baseUrl): string
+    {
+        return rtrim($baseUrl, '/') . '/' . $this->relativePath;
     }
 
 

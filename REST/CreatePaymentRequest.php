@@ -163,7 +163,7 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
     public static function fromArray(array $data): self
     {
         return new self(
-            $data[PaymentRequestField::REFENRECE],
+            $data[PaymentRequestField::REFERENCE],
             $data[PaymentRequestField::CLIENT],
             $data[PaymentRequestField::AMOUNT],
             $data[PaymentRequestField::CHECKIN],
@@ -181,7 +181,7 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
     public function toArray(): array
     {
         return [
-            PaymentRequestField::REFENRECE => $this->referenceId,
+            PaymentRequestField::REFERENCE => $this->referenceId,
             PaymentRequestField::CLIENT => $this->client,
             PaymentRequestField::AMOUNT => $this->amount,
             PaymentRequestField::CHECKIN => $this->checkIn->format(self::dateFormat),
