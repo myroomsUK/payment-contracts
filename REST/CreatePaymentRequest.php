@@ -7,6 +7,19 @@ use Myrooms\Payment\Contracts\REST\CreatePaymentRequestContract;
 
 class CreatePaymentRequest implements CreatePaymentRequestContract
 {
+    private const REFERENCE = 'referenceId';
+    private const CLIENT = 'client';
+    private const AMOUNT = 'amount';
+    private const CHECKIN = 'checkin';
+    private const CHECKOUT = 'checkout';
+    private const TOTAL = 'total';
+    private const ROOM_NAME = 'roomName';
+    private const ROOM_DESC = 'roomDescription';
+    private const ROOM_IMAGE = 'roomImageUrl';
+    private const WEEKLY_PRICE = 'weeklyPrice';
+    private const MONTHLY_PRICE = 'monthlyPrice';
+    private const CURRENCY = 'currency';
+
     private const dateFormat = 'Y-m-d';
 
     /**
@@ -163,36 +176,36 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
     public static function fromArray(array $data): self
     {
         return new self(
-            $data[PaymentRequestField::REFERENCE],
-            $data[PaymentRequestField::CLIENT],
-            $data[PaymentRequestField::AMOUNT],
-            $data[PaymentRequestField::CHECKIN],
-            $data[PaymentRequestField::CHECKOUT],
-            $data[PaymentRequestField::TOTAL],
-            $data[PaymentRequestField::ROOM_NAME],
-            $data[PaymentRequestField::ROOM_DESC],
-            $data[PaymentRequestField::ROOM_IMAGE],
-            $data[PaymentRequestField::WEEKLY_PRICE],
-            $data[PaymentRequestField::MONTHLY_PRICE],
-            $data[PaymentRequestField::CURRENCY]
+            $data[self::REFERENCE],
+            $data[self::CLIENT],
+            $data[self::AMOUNT],
+            $data[self::CHECKIN],
+            $data[self::CHECKOUT],
+            $data[self::TOTAL],
+            $data[self::ROOM_NAME],
+            $data[self::ROOM_DESC],
+            $data[self::ROOM_IMAGE],
+            $data[self::WEEKLY_PRICE],
+            $data[self::MONTHLY_PRICE],
+            $data[self::CURRENCY]
         );
     }
 
     public function toArray(): array
     {
         return [
-            PaymentRequestField::REFERENCE => $this->referenceId,
-            PaymentRequestField::CLIENT => $this->client,
-            PaymentRequestField::AMOUNT => $this->amount,
-            PaymentRequestField::CHECKIN => $this->checkIn->format(self::dateFormat),
-            PaymentRequestField::CHECKOUT => $this->checkOut->format(self::dateFormat),
-            PaymentRequestField::TOTAL => $this->total,
-            PaymentRequestField::ROOM_NAME => $this->roomName,
-            PaymentRequestField::ROOM_DESC => $this->roomDescription,
-            PaymentRequestField::ROOM_IMAGE => $this->roomImageUrl,
-            PaymentRequestField::WEEKLY_PRICE => $this->weeklyPrice,
-            PaymentRequestField::MONTHLY_PRICE => $this->monthlyPrice,
-            PaymentRequestField::CURRENCY => $this->currency
+            self::REFERENCE => $this->referenceId,
+            self::CLIENT => $this->client,
+            self::AMOUNT => $this->amount,
+            self::CHECKIN => $this->checkIn->format(self::dateFormat),
+            self::CHECKOUT => $this->checkOut->format(self::dateFormat),
+            self::TOTAL => $this->total,
+            self::ROOM_NAME => $this->roomName,
+            self::ROOM_DESC => $this->roomDescription,
+            self::ROOM_IMAGE => $this->roomImageUrl,
+            self::WEEKLY_PRICE => $this->weeklyPrice,
+            self::MONTHLY_PRICE => $this->monthlyPrice,
+            self::CURRENCY => $this->currency
         ];
     }
 
