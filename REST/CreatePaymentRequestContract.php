@@ -30,6 +30,8 @@ interface CreatePaymentRequestContract
 
     public function getMonthlyPrice(): int;
 
+    public function isOffline(): bool;
+
     public static function fromArray(array $data);
 
     public function toArray(): array;

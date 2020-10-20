@@ -19,6 +19,7 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
     private const WEEKLY_PRICE = 'weeklyPrice';
     private const MONTHLY_PRICE = 'monthlyPrice';
     private const CURRENCY = 'currency';
+    private const OFFLINE = 'offline';
 
     private const dateFormat = 'Y-m-d';
 
@@ -82,8 +83,13 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
      */
     private $currency;
 
+    /**
+     * @var bool
+     */
+    private $offline;
 
-    public function __construct(string $referenceId, string $client, $amount, \DateTimeImmutable $checkIn, \DateTimeImmutable $checkOut, int $total, string $roomName, string $roomDescription, string $roomImageUrl, int $weeklyPrice, int $monthlyPrice, string $currency)
+
+    public function __construct(string $referenceId, string $client, $amount, \DateTimeImmutable $checkIn, \DateTimeImmutable $checkOut, int $total, string $roomName, string $roomDescription, string $roomImageUrl, int $weeklyPrice, int $monthlyPrice, string $currency, bool $offline)
     {
 
         \Assert\Assert::lazy()
@@ -96,6 +102,7 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
             ->that($roomImageUrl)->url()
             ->that($roomName)->notNull()
             ->that($currency)->notNull()
+            ->that($offline)->notNull()
             ->verifyNow();
 
         $this->referenceId = $referenceId;
@@ -110,6 +117,7 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
         $this->weeklyPrice = $weeklyPrice;
         $this->monthlyPrice = $monthlyPrice;
         $this->currency = $currency;
+        $this->offline = $offline;
     }
 
     public function getReferenceId(): string
@@ -173,6 +181,13 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
         return $this->currency;
     }
 
+    public function isOffline(): bool
+    {
+        return $this->offline;
+    }
+
+
+
     public static function fromArray(array $data): self
     {
         return new self(
@@ -187,7 +202,8 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
             $data[self::ROOM_IMAGE],
             $data[self::WEEKLY_PRICE],
             $data[self::MONTHLY_PRICE],
-            $data[self::CURRENCY]
+            $data[self::CURRENCY],
+            $data[self::OFFLINE]
         );
     }
 
@@ -205,7 +221,8 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
             self::ROOM_IMAGE => $this->roomImageUrl,
             self::WEEKLY_PRICE => $this->weeklyPrice,
             self::MONTHLY_PRICE => $this->monthlyPrice,
-            self::CURRENCY => $this->currency
+            self::CURRENCY => $this->currency,
+            self::OFFLINE => $this->offline
         ];
     }
 
