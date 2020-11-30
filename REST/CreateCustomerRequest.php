@@ -26,6 +26,7 @@ class CreateCustomerRequest implements CreateCustomerRequestContract
             ->verifyNow();
 
         $this->email = $email;
+        $this->client = $client;
     }
 
     public function getEmail(): string
