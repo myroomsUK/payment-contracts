@@ -8,10 +8,12 @@ class Client
 {
     public const MYROOMS       = 'Myrooms';
     public const WEROOMS       = 'Werooms';
+    public const L2L           = 'London2let';
 
-    private const CLIENTS = [
+    public const CLIENTS = [
         self::MYROOMS,
         self::WEROOMS,
+        self::L2L
     ];
 
     public static function isValid(string $value): bool
