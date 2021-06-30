@@ -20,4 +20,14 @@ class PaymentEndpoints
     {
         return new Endpoint('api/payment/direct-payment', 'POST');
     }
+
+    static public function acceptPayment(string $ulid): Endpoint
+    {
+        return new Endpoint(sprintf("api/payment/accept-offline-payment/%s",$ulid), 'GET');
+    }
+
+    static public function denyPayment(string $ulid): Endpoint
+    {
+        return new Endpoint(sprintf("api/payment/deny-offline-payment/%s",$ulid), 'GET');
+    }
 }
