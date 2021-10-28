@@ -16,8 +16,6 @@ interface CreatePaymentRequestContract
 
     public function getCheckOut(): \DateTimeImmutable;
 
-    public function getTotal(): int;
-
     public function getCurrency(): string;
 
     public function getRoomName(): string;
