@@ -6,10 +6,11 @@ namespace Myrooms\Payment\Contracts\REST;
 
 class CreateSimplePaymentRequest implements CreateSimplePaymentRequestContract
 {
-
-    private const AMOUNT = "amount";
     private const CURRENCY = "currency";
     private CONST CUSTOMER = "customer";
+    private const PAYMENT_ITEMS = 'paymentItems';
+    const AMOUNT = "amount";
+
 
     /**
      * @var int
@@ -26,15 +27,25 @@ class CreateSimplePaymentRequest implements CreateSimplePaymentRequestContract
      */
     private $customer;
 
-    public function __construct(int $amount, string $currency, string $customer)
+    private $paymentItems;
+
+    public function __construct(string $currency, string $customer, $paymentItems)
     {
-        \Assert\Assert::lazy()->that($amount)->notNull()->integer()
+        \Assert\Assert::lazy()
             ->that($currency)->notNull()
+            ->that($paymentItems)->isArray()->notEmpty()
             ->that($customer)->notNull()->verifyNow();;
 
-        $this->amount = $amount;
         $this->currency = $currency;
         $this->customer = $customer;
+
+        $this->paymentItems = array_map(function($pI){
+            return new PaymentItem($pI["amount"],$pI["title"],$pI["description"], $pI["vat"] ?? 0);
+        }, $paymentItems);
+
+        $this->amount = array_sum(array_map(function($pI){
+            return $pI->getAmount();
+        },$this->paymentItems));
     }
 
 
@@ -42,9 +53,9 @@ class CreateSimplePaymentRequest implements CreateSimplePaymentRequestContract
     public static function fromArray(array $data)
     {
         return new self(
-            $data[self::AMOUNT],
             $data[self::CURRENCY],
-            $data[self::CUSTOMER]
+            $data[self::CUSTOMER],
+            $data[self::PAYMENT_ITEMS]
         );
     }
 
@@ -53,8 +64,11 @@ class CreateSimplePaymentRequest implements CreateSimplePaymentRequestContract
         return [
             self::AMOUNT => $this->amount,
             self::CURRENCY => $this->currency,
-            self::CUSTOMER => $this->customer
-            ];
+            self::CUSTOMER => $this->customer,
+            self::PAYMENT_ITEMS => array_map(function($paymentItem){
+                return $paymentItem->toArray();
+            }, $this->paymentItems)
+        ];
     }
 
     public function getAmount(): int
@@ -70,5 +84,10 @@ class CreateSimplePaymentRequest implements CreateSimplePaymentRequestContract
     public function getCustomer(): string
     {
         return $this->customer;
+    }
+
+    public function getPaymentItems(): array
+    {
+        return $this->paymentItems;
     }
 }
