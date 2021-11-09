@@ -68,7 +68,7 @@ class CreateSimplePaymentRequest implements CreateSimplePaymentRequestContract
             self::PAYMENT_ITEMS => array_map(function($paymentItem){
                 return $paymentItem->toArray();
             }, $this->paymentItems)
-        ];
+            ];
     }
 
     public function getAmount(): int

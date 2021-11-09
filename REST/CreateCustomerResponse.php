@@ -9,7 +9,6 @@ class CreateCustomerResponse implements CreateCustomerResponseContract
 
     private const EMAIL = "email";
     private const CUSTOMER_ID = "customerId";
-    private const OFFLINE_PAYMENT_SETUP_URL = "offlinePaymentSetupUrl";
 
     /**
      * @var string
@@ -21,21 +20,15 @@ class CreateCustomerResponse implements CreateCustomerResponseContract
      */
     private $email;
 
-    /**
-     * @var string
-     */
-    private $offlinePaymentSetupUrl;
 
-    public function __construct(string $customerId, string $email, string $offlinePaymentSetupUrl){
+    public function __construct(string $customerId, string $email){
         \Assert\Assert::lazy()
             ->that($email)->notNull()->email()
             ->that($customerId)->notNull()
-            ->that($offlinePaymentSetupUrl)->notNull()->url()
             ->verifyNow();
 
         $this->email = $email;
         $this->customerId = $customerId;
-        $this->offlinePaymentSetupUrl = $offlinePaymentSetupUrl;
     }
 
     public function getCustomerId(): string
@@ -55,7 +48,7 @@ class CreateCustomerResponse implements CreateCustomerResponseContract
 
     public static function fromArray(array $data)
     {
-        return new self($data[self::CUSTOMER_ID], $data[self::EMAIL], $data[self::OFFLINE_PAYMENT_SETUP_URL]);
+        return new self($data[self::CUSTOMER_ID], $data[self::EMAIL]);
     }
 
     public function toArray(): array
@@ -63,7 +56,6 @@ class CreateCustomerResponse implements CreateCustomerResponseContract
         return [
             self::CUSTOMER_ID => $this->customerId,
             self::EMAIL => $this->email,
-            self::OFFLINE_PAYMENT_SETUP_URL => $this->offlinePaymentSetupUrl
         ];
     }
 

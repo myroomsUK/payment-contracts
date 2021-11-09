@@ -14,19 +14,12 @@ class CreateCustomerRequest implements CreateCustomerRequestContract
      */
     private $email;
 
-    /**
-     * @var string
-     */
-    private $client;
-
-    public function __construct(string $email, string $client){
+    public function __construct(string $email){
         \Assert\Assert::lazy()
             ->that($email)->notNull()->email()
-            ->that($client)->notNull()->inArray(Client::CLIENTS)
             ->verifyNow();
 
         $this->email = $email;
-        $this->client = $client;
     }
 
     public function getEmail(): string
@@ -34,28 +27,16 @@ class CreateCustomerRequest implements CreateCustomerRequestContract
         return $this->email;
     }
 
-    /**
-     * @return string
-     */
-    public function getClient(): string
-    {
-        return $this->client;
-    }
-
-
-
-
 
     public static function fromArray(array $data)
     {
-        return new self($data[self::EMAIL], $data[self::CLIENT]);
+        return new self($data[self::EMAIL]);
     }
 
     public function toArray(): array
     {
         return [
-            self::EMAIL => $this->email,
-            self::CLIENT => $this->client
+            self::EMAIL => $this->email
         ];
     }
 }
