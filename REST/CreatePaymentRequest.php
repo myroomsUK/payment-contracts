@@ -6,7 +6,6 @@ namespace Myrooms\Payment\Contracts\REST;
 class CreatePaymentRequest implements CreatePaymentRequestContract
 {
     private const REFERENCE = 'referenceId';
-    private const CLIENT = 'client';
     private const AMOUNT = 'amount';
     private const CHECKIN = 'checkin';
     private const CHECKOUT = 'checkout';
@@ -25,11 +24,6 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
      * @var string
      */
     private $referenceId;
-
-    /**
-     * @var string
-     */
-    private $client;
 
     /**
      * @var int
@@ -84,12 +78,11 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
     private $paymentItems;
 
 
-    public function __construct(string $referenceId, string $client, \DateTimeImmutable $checkIn, \DateTimeImmutable $checkOut, string $roomName, string $roomDescription, string $roomImageUrl, int $weeklyPrice, int $monthlyPrice, string $currency, bool $offline, $paymentItems)
+    public function __construct(string $referenceId, \DateTimeImmutable $checkIn, \DateTimeImmutable $checkOut, string $roomName, string $roomDescription, string $roomImageUrl, int $weeklyPrice, int $monthlyPrice, string $currency, bool $offline, $paymentItems)
     {
 
         \Assert\Assert::lazy()
             ->that($referenceId)->notNull()->string()
-            ->that($client)->notNull()->string()
             ->that($checkIn->format(self::dateFormat))->date( self::dateFormat)
             ->that($checkOut->format(self::dateFormat))->date(self::dateFormat)->greaterThan($checkIn->format(self::dateFormat))
             ->that($roomImageUrl)->url()
@@ -100,7 +93,6 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
             ->verifyNow();
 
         $this->referenceId = $referenceId;
-        $this->client = $client;
         $this->checkIn = $checkIn;
         $this->checkOut = $checkOut;
         $this->roomName = $roomName;
@@ -124,11 +116,6 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
     public function getReferenceId(): string
     {
         return $this->referenceId;
-    }
-
-    public function getClient(): string
-    {
-        return $this->client;
     }
 
     public function getAmount(): int
@@ -187,7 +174,6 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
     {
         return new self(
             $data[self::REFERENCE],
-            $data[self::CLIENT],
             $data[self::CHECKIN],
             $data[self::CHECKOUT],
             $data[self::ROOM_NAME],
@@ -205,7 +191,6 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
     {
         return [
             self::REFERENCE => $this->referenceId,
-            self::CLIENT => $this->client,
             self::AMOUNT => $this->amount,
             self::CHECKIN => $this->checkIn->format(self::dateFormat),
             self::CHECKOUT => $this->checkOut->format(self::dateFormat),

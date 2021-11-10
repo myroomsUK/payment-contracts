@@ -8,8 +8,6 @@ interface CreatePaymentRequestContract
 {
     public function getReferenceId(): string;
 
-    public function getClient(): string;
-
     public function getAmount(): int;
 
     public function getCheckIn(): \DateTimeImmutable;
