@@ -6,11 +6,6 @@ namespace Myrooms\Payment\Contracts\REST;
 
 class PaymentEndpoints
 {
-    static public function create(): Endpoint
-    {
-        return new Endpoint('api/create_payment', 'POST');
-    }
-
     static public function createCustomer(): Endpoint
     {
         return new Endpoint('api/customer/create-customer', 'POST');
@@ -31,8 +26,13 @@ class PaymentEndpoints
         return new Endpoint(sprintf("api/payment/deny-offline-payment/%s",$ulid), 'GET');
     }
 
+    static public function createBookingPayment(): Endpoint
+    {
+        return new Endpoint('api/payment/create/booking', 'POST');
+    }
+
     static public function createHoldingDepositPayment(): Endpoint
     {
-        return new Endpoint('api/payment/create-holding-deposit-payment', 'POST');
+        return new Endpoint('api/payment/create/holding', 'POST');
     }
 }
