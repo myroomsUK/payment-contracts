@@ -64,7 +64,7 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
     private $roomDescription;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $roomImageUrl;
 
@@ -89,7 +89,7 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
     private $offline;
 
 
-    public function __construct(string $referenceId, string $client, $amount, \DateTimeImmutable $checkIn, \DateTimeImmutable $checkOut, int $total, string $roomName, string $roomDescription, string $roomImageUrl, int $weeklyPrice, int $monthlyPrice, string $currency, bool $offline)
+    public function __construct(string $referenceId, string $client, $amount, \DateTimeImmutable $checkIn, \DateTimeImmutable $checkOut, int $total, string $roomName, string $roomDescription, ?string $roomImageUrl, int $weeklyPrice, int $monthlyPrice, string $currency, bool $offline)
     {
 
         \Assert\Assert::lazy()
@@ -161,7 +161,7 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
         return $this->roomDescription;
     }
 
-    public function getRoomImageUrl(): string
+    public function getRoomImageUrl(): ?string
     {
         return $this->roomImageUrl;
     }
