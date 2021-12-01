@@ -20,7 +20,7 @@ interface CreatePaymentRequestContract
 
     public function getRoomDescription(): string;
 
-    public function getRoomImageUrl(): string;
+    public function getRoomImageUrl(): ?string;
 
     public function getWeeklyPrice(): int;
 
