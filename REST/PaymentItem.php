@@ -3,6 +3,7 @@
 
 namespace Myrooms\Payment\Contracts\REST;
 
+use OpenApi\Annotations as OA;
 
 class PaymentItem
 {
