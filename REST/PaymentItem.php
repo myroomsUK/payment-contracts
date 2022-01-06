@@ -55,6 +55,30 @@ class PaymentItem
         return $this->amount + ($this->amount*$this->vat)/100;
     }
 
+    /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return int
+     */
+    public function getVat(): int
+    {
+        return $this->vat;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
     public function toArray(){
         return [
             self::AMOUNT => $this->amount,
