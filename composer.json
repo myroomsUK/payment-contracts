@@ -6,7 +6,8 @@
   "require": {
     "php": ">=7.2",
     "beberlei/assert": "^3.2",
-    "ext-json": "*"
+    "ext-json": "*",
+    "zircote/swagger-php": "^4.1"
   },
   "authors": [
     {

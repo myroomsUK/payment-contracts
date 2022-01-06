@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Myrooms\Payment\Contracts\REST;
 
+use OpenApi\Annotations as OA;
+
 class CreatePaymentRequest implements CreatePaymentRequestContract
 {
     private const REFERENCE = 'referenceId';
@@ -22,59 +24,73 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
 
     /**
      * @var string
+     * @OA\Property(type="string", maxLength=255, description="Parameter that might be used as an external parameter ")
      */
     private $referenceId;
 
     /**
      * @var int
+     * @OA\Property(type="int", description="Total amount to be paid in cents, e.g. 200 $ = 20000")
      */
     private $amount;
 
     /**
      * @var \DateTimeImmutable
+     * @OA\Property(type="date", description="Start date of the tenancy. Format: Y-m-d, e.g. 2021-12-30")
      */
     private $checkIn;
 
     /**
      * @var \DateTimeImmutable
+     * @OA\Property(type="date", description="End date of the tenancy. Format: Y-m-d, e.g. 2021-12-30")
      */
     private $checkOut;
 
     /**
      * @var string
+     * @OA\Property(type="string", maxLength=255, description="Room listing title")
      */
     private $roomName;
 
     /**
      * @var string
+     * @OA\Property(type="string", maxLength=255, description="Room listing description")
      */
     private $roomDescription;
 
     /**
      * @var string|null
+     * @OA\Property(type="string", maxLength=255, description="Room listing image url", nullable=true)
      */
     private $roomImageUrl;
 
     /**
      * @var int
+     * @OA\Property(type="int", description="Weekly price of the room in cents, e.g. 200 $ = 20000")
      */
     private $weeklyPrice;
 
     /**
      * @var int
+     * @OA\Property(type="int", description="Monthly price of the room in cents, e.g. 200 $ = 20000")
      */
     private $monthlyPrice;
 
     /**
      * @var string
+     * @OA\Property(type="string", description="Currency, e.g. GBP")
      */
     private $currency;
 
     /**
      * @var bool
+     * @OA\Property(type="bool", description="If offline is false, money is captured immediately. If offline is false, the user authorizes a payment that needs to be captured later on through the Accept endpoint or rejeceted")
      */
     private $offline;
 
+    /**
+     * @var PaymentItem[]
+     */
     private $paymentItems;
 
 

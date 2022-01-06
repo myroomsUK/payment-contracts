@@ -11,12 +11,28 @@ class PaymentItem
     const DESCRIPTION = "description";
     const VAT = "vat";
 
+    /**
+     * @var int
+     * @OA\Property(type="int", description="Payment item net value in cents")
+     */
     private int $amount;
 
+    /**
+     * @var string
+     * @OA\Property(type="string", maxLength=255, description="Payment item title")
+     */
     private string $title;
 
+    /**
+     * @var string
+     * @OA\Property(type="string", maxLength=255, description="Payment item description")
+     */
     private string  $description;
 
+    /**
+     * @var int
+     * @OA\Property(type="int", description="Payment item VAT: integer value, e.g. 20")
+     */
     private int $vat;
 
 
