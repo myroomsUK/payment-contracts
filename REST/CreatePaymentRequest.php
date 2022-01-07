@@ -84,7 +84,7 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
 
     /**
      * @var bool
-     * @OA\Property(type="bool", description="If offline is false, money is captured immediately. If offline is false, the user authorizes a payment that needs to be captured later on through the Accept endpoint or rejeceted")
+     * @OA\Property(type="bool", description="If offline is false, money is captured immediately. If offline is true, the user authorizes a payment that needs to be captured later on through the Accept endpoint or rejeceted")
      */
     private $offline;
 
