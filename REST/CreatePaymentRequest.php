@@ -38,13 +38,13 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
      * @var \DateTimeImmutable
      * @OA\Property(type="date", description="Start date of the tenancy. Format: Y-m-d, e.g. 2021-12-30")
      */
-    private $checkIn;
+    private $checkin;
 
     /**
      * @var \DateTimeImmutable
      * @OA\Property(type="date", description="End date of the tenancy. Format: Y-m-d, e.g. 2021-12-30")
      */
-    private $checkOut;
+    private $checkout;
 
     /**
      * @var string
@@ -94,13 +94,13 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
     private $paymentItems;
 
 
-    public function __construct(string $referenceId, \DateTimeImmutable $checkIn, \DateTimeImmutable $checkOut, string $roomName, string $roomDescription, ?string $roomImageUrl, int $weeklyPrice, int $monthlyPrice, string $currency, bool $offline, $paymentItems)
+    public function __construct(string $referenceId, \DateTimeImmutable $checkin, \DateTimeImmutable $checkout, string $roomName, string $roomDescription, ?string $roomImageUrl, int $weeklyPrice, int $monthlyPrice, string $currency, bool $offline, $paymentItems)
     {
 
         \Assert\Assert::lazy()
             ->that($referenceId)->notNull()->string()
-            ->that($checkIn->format(self::dateFormat))->date( self::dateFormat)
-            ->that($checkOut->format(self::dateFormat))->date(self::dateFormat)->greaterThan($checkIn->format(self::dateFormat))
+            ->that($checkin->format(self::dateFormat))->date( self::dateFormat)
+            ->that($checkout->format(self::dateFormat))->date(self::dateFormat)->greaterThan($checkin->format(self::dateFormat))
             ->that($roomImageUrl)->nullOr()->url()
             ->that($roomName)->notNull()
             ->that($currency)->notNull()
@@ -109,8 +109,8 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
             ->verifyNow();
 
         $this->referenceId = $referenceId;
-        $this->checkIn = $checkIn;
-        $this->checkOut = $checkOut;
+        $this->checkin = $checkin;
+        $this->checkout = $checkout;
         $this->roomName = $roomName;
         $this->roomDescription = $roomDescription;
         $this->roomImageUrl = $roomImageUrl;
@@ -139,14 +139,14 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
         return $this->amount;
     }
 
-    public function getCheckIn(): \DateTimeImmutable
+    public function getCheckin(): \DateTimeImmutable
     {
-        return $this->checkIn;
+        return $this->checkin;
     }
 
-    public function getCheckOut(): \DateTimeImmutable
+    public function getCheckout(): \DateTimeImmutable
     {
-        return $this->checkOut;
+        return $this->checkout;
     }
 
     public function getRoomName(): string
@@ -208,8 +208,8 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
         return [
             self::REFERENCE => $this->referenceId,
             self::AMOUNT => $this->amount,
-            self::CHECKIN => $this->checkIn->format(self::dateFormat),
-            self::CHECKOUT => $this->checkOut->format(self::dateFormat),
+            self::CHECKIN => $this->checkin->format(self::dateFormat),
+            self::CHECKOUT => $this->checkout->format(self::dateFormat),
             self::ROOM_NAME => $this->roomName,
             self::ROOM_DESC => $this->roomDescription,
             self::ROOM_IMAGE => $this->roomImageUrl,
