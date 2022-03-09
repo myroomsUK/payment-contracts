@@ -62,7 +62,7 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
      * @var string|null
      * @OA\Property(type="string", maxLength=255, description="Room listing image url", nullable=true)
      */
-    private $roomImageUrl;
+    private $roomImageUrl = null;
 
     /**
      * @var int
@@ -194,7 +194,7 @@ class CreatePaymentRequest implements CreatePaymentRequestContract
             $data[self::CHECKOUT],
             $data[self::ROOM_NAME],
             $data[self::ROOM_DESC],
-            $data[self::ROOM_IMAGE],
+            isset($data[self::ROOM_IMAGE]) ? $data[self::ROOM_IMAGE] : null,
             $data[self::WEEKLY_PRICE],
             $data[self::MONTHLY_PRICE],
             $data[self::CURRENCY],
