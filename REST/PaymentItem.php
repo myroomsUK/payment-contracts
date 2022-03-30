@@ -32,7 +32,7 @@ class PaymentItem
 
     /**
      * @var int
-     * @OA\Property(type="int", description="Payment item VAT: integer value, e.g. 20")
+     * @OA\Property(type="int", description="Payment item VAT: integer value in CENTS, e.g. 2000 means 20,00%")
      */
     private int $vat;
 
@@ -52,7 +52,7 @@ class PaymentItem
 
     public function getAmount(): int
     {
-        return $this->amount + ($this->amount*$this->vat)/100;
+        return $this->amount + ($this->amount*$this->vat/100)/100;
     }
 
     /**
